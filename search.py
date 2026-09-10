@@ -90,7 +90,29 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    return(dfsrecursive(problem, problem.getStartState(), list(), set()))
+
+
+def dfsrecursive(problem: SearchProblem, pos, path: List, explored: set):
+    if problem.isGoalState(pos):
+        return path
+    if pos in explored:
+        #already visisted
+        return None
+
+    explored.add(pos)
+    
+    for item in problem.getSuccessors(pos):
+        next_pos = item[0]
+        action = item[1]
+        search = dfsrecursive(problem, next_pos, path + [action], explored)
+        if search is not None:
+            return search
+
+    return None #no solution
+
+
+
 
 def breadthFirstSearch(problem: SearchProblem) -> List[Directions]:
     """Search the shallowest nodes in the search tree first."""
