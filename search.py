@@ -117,7 +117,29 @@ def dfsrecursive(problem: SearchProblem, pos, path: List, explored: set):
 def breadthFirstSearch(problem: SearchProblem) -> List[Directions]:
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    queue = util.Queue()
+    explored = set()
+
+    queue.push((problem.getStartState(), []))
+
+    while not queue.isEmpty():
+        pos, path = queue.pop()
+
+        if problem.isGoalState(pos):
+            return path
+
+        if pos in explored:
+            continue
+
+        explored.add(pos)
+
+        for item in problem.getSuccessors(pos):
+            next_pos = item[0]
+            action = item[1]
+
+            queue.push((next_pos, path + [action]))
+
+    return []
 
 def uniformCostSearch(problem: SearchProblem) -> List[Directions]:
     """Search the node of least total cost first."""
